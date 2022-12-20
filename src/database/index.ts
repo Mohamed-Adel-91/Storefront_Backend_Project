@@ -6,7 +6,7 @@ const client = new Pool({
   database: config.database,
   user: config.user,
   password: config.password,
-  port: parseInt(config.port as string, 10),
+  port: parseInt(config.dbport as string, 10),
   max: 4,
 });
 

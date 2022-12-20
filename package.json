@@ -9,6 +9,7 @@
     "start": "npm run build && node dist/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "test": "npm run build && jasmine",
+    "migration:run":"db-migrate up",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier": "prettier --config .prettierrc.json \"src/**/*.ts\" --write ",
