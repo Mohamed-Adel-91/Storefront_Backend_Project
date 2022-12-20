@@ -11,7 +11,7 @@
     "test": "npm run build && jasmine",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "prettier": "prettier --config .prettierrc \"src/**/*.ts\" --write ",
+    "prettier": "prettier --config .prettierrc.json \"src/**/*.ts\" --write ",
     "format": "prettier --write src/**/*.ts"
   },
   "repository": {
@@ -33,7 +33,6 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
-    "dotenv": "^16.0.3",
     "eslint": "^8.30.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -51,6 +50,7 @@
     "body-parser": "^1.20.1",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "helmet": "^6.0.1",

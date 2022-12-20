@@ -4,9 +4,11 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
 import errorMiddleware from './middleware/error.middleware';
+import config from './middleware/config';
+import db from './database';
 
 
-const port = 3000;
+const port = config.port || 3000;
 
 const app: Application = express();
 
@@ -24,6 +26,18 @@ app.use(rateLimit({
     message: 'Too many requests from this IP, Please try again after 15 minutes'
 }));
 
+db.connect().then((client) => {
+    return client
+      .query('SELECT NOW()')
+      .then((res) => {
+        client.release();
+        console.log(res.rows);
+      })
+      .catch((err) => {
+        client.release();
+        console.log(err.stack);
+      });
+  });
 
 app.use((_req: express.Request, res: express.Response)=>{
     res.status(404).json({
@@ -42,6 +56,7 @@ app.post('/',  (req: express.Request, res: express.Response) => {
         data: req.body,
     });
   });
+
 
 
 app.listen(port, () => {
