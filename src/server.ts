@@ -3,6 +3,7 @@ import express, { Application } from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { rateLimit } from 'express-rate-limit';
+import errorMiddleware from './middleware/error.middleware';
 
 
 const port = 3000;
@@ -12,6 +13,7 @@ const app: Application = express();
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(helmet());
+app.use(errorMiddleware);
 
 // Apply the rate limiting middleware to all requests
 app.use(rateLimit({
@@ -22,6 +24,12 @@ app.use(rateLimit({
     message: 'Too many requests from this IP, Please try again after 15 minutes'
 }));
 
+
+app.use((_req: express.Request, res: express.Response)=>{
+    res.status(404).json({
+        message: 'What do you do ? some wrong was happened :o'
+    })
+})
 
 
 app.get('/',  (req: express.Request, res: express.Response) => {
