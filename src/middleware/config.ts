@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ export default {
   port: port,
   host: POSTGRES_HOST,
   dbport: POSTGRES_PORT,
-  database: NODE_ENV === 'dev' ? POSTGRES_DATABASE : POSTGRES_DATABASE_TEST,
+  database: NODE_ENV === "dev" ? POSTGRES_DATABASE : POSTGRES_DATABASE_TEST,
   user: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
 };

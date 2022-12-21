@@ -55,3 +55,14 @@ Add JWT functionality as shown in the course. Make sure that JWTs are required f
 Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database.
 
 Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+
+### MY .env file 
+  port=3000
+  NODE_ENV=dev
+
+  POSTGRES_HOST=localhost
+  POSTGRES_PORT=5432
+  POSTGRES_DATABASE=store_dev
+  POSTGRES_DATABASE_TEST=store_test
+  POSTGRES_USER=postgres
+  POSTGRES_PASSWORD=postgres
