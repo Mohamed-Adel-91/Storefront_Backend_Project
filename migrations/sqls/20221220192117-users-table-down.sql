@@ -1,2 +1,2 @@
 -- drop table users 
-DROP TABLE "users";
+DROP TABLE users;
