@@ -1,15 +1,12 @@
-CREATE TABLE "Order_Product" (
-    "Order_ProductID" INT NOT NULL,
-    "OrderID" bigint   NOT NULL,
-    "ProductID" bigint   NOT NULL,
-    "Quantity" bigint   NOT NULL,
-    CONSTRAINT "pk_Order_Product" PRIMARY KEY (
-        "Order_ProductID"
-     )
+CREATE TABLE "order_product" (
+    "order_productID" SERIAL PRIMARY KEY,
+    "orderID" bigint   NOT NULL,
+    "productID" bigint   NOT NULL,
+    "quantity" bigint   NOT NULL,
 );
 
-ALTER TABLE "Order_Product" ADD CONSTRAINT "fk_Order_Product_OrderID" FOREIGN KEY("OrderID")
-REFERENCES "Orders" ("OrderID");
+ALTER TABLE "order_product" ADD CONSTRAINT "fk_order_product_orderID" FOREIGN KEY("orderID")
+REFERENCES "orders" ("orderID");
 
-ALTER TABLE "Order_Product" ADD CONSTRAINT "fk_Order_Product_ProductID" FOREIGN KEY("ProductID")
-REFERENCES "Product" ("ProductID");
+ALTER TABLE "order_product" ADD CONSTRAINT "fk_order_product_productID" FOREIGN KEY("productID")
+REFERENCES "product" ("productID");

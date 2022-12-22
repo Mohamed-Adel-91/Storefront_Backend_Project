@@ -1,2 +1,2 @@
 -- drop table order_product 
-DROP TABLE "Order_Product";
+DROP TABLE "order_product";

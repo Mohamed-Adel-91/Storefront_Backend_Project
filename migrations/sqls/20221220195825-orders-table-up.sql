@@ -1,11 +1,8 @@
-CREATE TABLE "Orders" (
-    "OrderID" INT NOT NULL,
-    "UsersID" integer   NOT NULL,
-    "Status" varchar(200)   NOT NULL,
-    CONSTRAINT "pk_Orders" PRIMARY KEY (
-        "OrderID"
-     )
+CREATE TABLE "orders" (
+    "orderID" SERIAL PRIMARY KEY,
+    "usersID" integer   NOT NULL,
+    "status" varchar(200)   NOT NULL,
 );
 
-ALTER TABLE "Orders" ADD CONSTRAINT "fk_Orders_UsersID" FOREIGN KEY("UsersID")
-REFERENCES "Users" ("UsersID");
+ALTER TABLE "orders" ADD CONSTRAINT "fk_orders_usersID" FOREIGN KEY("usersID")
+REFERENCES "users" ("usersID");

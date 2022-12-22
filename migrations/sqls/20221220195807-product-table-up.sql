@@ -1,9 +1,6 @@
-CREATE TABLE "Product" (
-    "ProductID" INT NOT NULL,
-    "Name" varchar(200)   NOT NULL,
-    "Price" integer   NOT NULL,
-    "Category" varchar(200)   NOT NULL,
-    CONSTRAINT "pk_Product" PRIMARY KEY (
-        "ProductID"
-     )
+CREATE TABLE "product" (
+    "productID" SERIAL PRIMARY KEY,
+    "Name" varchar(200) NOT NULL,
+    "price" integer NOT NULL,
+    "category" varchar(200) NOT NULL,
 );
