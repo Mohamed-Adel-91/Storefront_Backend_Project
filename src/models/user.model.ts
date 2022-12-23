@@ -1,6 +1,6 @@
 import User from "../types/user.type";
 import client from "../database"
-import config from "../middleware/config";
+import config from "../config";
 import bcrypt from "bcrypt";
 
 const hashPassword = (password: string) => {

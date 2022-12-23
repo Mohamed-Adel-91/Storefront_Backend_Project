@@ -4,7 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { rateLimit } from "express-rate-limit";
 import errorMiddleware from "./middleware/error.middleware";
-import config from "./middleware/config";
+import config from "./config";
 import client from "./database";
 import routes from "./routes";
 
