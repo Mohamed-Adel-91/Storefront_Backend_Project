@@ -42,7 +42,7 @@ class userModel {
   async getOneUser(usersID: number): Promise<User>{
       try {
         const conn = await client.connect();
-        const sql = `SELECT usersID, firstName, lastName FROM users WHERE userID=($1)`;
+        const sql = `SELECT usersID, firstName, lastName FROM users WHERE usersID=($1)`;
         const result = await conn.query(sql, [usersID]);
         conn.release();
         return result.rows[0];
@@ -54,7 +54,7 @@ class userModel {
   async updateOneUser(u: User): Promise<User>{
       try {
         const conn = await client.connect();
-        const sql = `UPDATE users SET firstName=$1, lastName=$2, password=$3 WHERE usersID=$4 RETURNING usersID, firstName, lastName`;
+        const sql = `UPDATE users SET firstName=$1, lastName=$2, password=$3 WHERE usersID=$4 RETURNING *`;
         const result = await conn.query(sql, [
           u.firstName,
           u.lastName,
@@ -71,7 +71,7 @@ class userModel {
   async deleteOneUser(usersID: number): Promise<User>{
       try {
         const conn = await client.connect();
-        const sql = `DELETE FROM users WHERE usersID=($1) RETURNING userID, firstName, lastName`;
+        const sql = `DELETE FROM users WHERE usersID=($1) RETURNING usersID, firstName, lastName`;
         const result = await conn.query(sql, [usersID]);
         conn.release();
         return result.rows[0];

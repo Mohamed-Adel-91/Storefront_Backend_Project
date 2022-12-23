@@ -8,8 +8,10 @@ export const create = async(
 req: Request, res: Response, next: NextFunction) => {
 try {
     const user = await usersModel.create(req.body);
-    res.send(`Welcome ${user.firstName}-${user.lastName}
-    your user was created successfully and your ID is ${user.usersID}!!`);    
+    res.json({
+        massage: 'Welcome, your user has been created ..!!',
+        data: user 
+    });    
 } catch (error) {
     next(error)  
     }
@@ -35,7 +37,7 @@ export const getOneUser =async (
     res: Response,
     next: NextFunction) => {
     try {
-        const user = await usersModel.getOneUser(req.params.userID as unknown as number);
+        const user = await usersModel.getOneUser(req.params.usersID as unknown as number);
         res.json({
             massage: 'Successfully user retrieved',
             data: user,
@@ -65,7 +67,7 @@ export const deleteOneUser =async (
     res: Response,
     next: NextFunction) => {
     try {
-        const user = await usersModel.deleteOneUser(req.params.userID as unknown as number);
+        const user = await usersModel.deleteOneUser(req.params.usersID as unknown as number);
         res.json({
             massage: 'Successfully user deleted',
             data: user,
