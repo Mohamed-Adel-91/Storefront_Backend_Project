@@ -1,5 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import userModel from "../models/user.model";
+import { NextFunction, Request, Response } from 'express';
+import userModel from '../models/user.model';
+import config from '../middleware/config';
+import jwt from 'jsonwebtoken';
 
 
 const usersModel = new userModel();
@@ -9,7 +11,7 @@ req: Request, res: Response, next: NextFunction) => {
 try {
     const user = await usersModel.create(req.body);
     res.json({
-        massage: 'Welcome, your user has been created ..!!',
+        message: 'Welcome, your user has been created ..!!',
         data: user 
     });    
 } catch (error) {
@@ -24,7 +26,7 @@ export const getAllUsers =async (
     try {
         const users = await usersModel.getAllUsers();
         res.json({
-            massage: 'Successfully users retrieved',
+            message: 'Successfully users retrieved',
             data: users,
         })
     } catch (error) {
@@ -39,7 +41,7 @@ export const getOneUser =async (
     try {
         const user = await usersModel.getOneUser(req.params.usersID as unknown as number);
         res.json({
-            massage: 'Successfully user retrieved',
+            message: 'Successfully user retrieved',
             data: user,
         })
     } catch (error) {
@@ -54,7 +56,7 @@ export const updateOneUser =async (
     try {
         const user = await usersModel.updateOneUser(req.body);
         res.json({
-            massage: 'Successfully user updated',
+            message: 'Successfully user updated',
             data: user,
         })
     } catch (error) {
@@ -69,10 +71,33 @@ export const deleteOneUser =async (
     try {
         const user = await usersModel.deleteOneUser(req.params.usersID as unknown as number);
         res.json({
-            massage: 'Successfully user deleted',
+            message: 'Successfully user deleted',
             data: user,
         })
     } catch (error) {
         next(error);
     }
+};
+
+export const authenticate =async (
+  req: Request,
+  res: Response,
+  next: NextFunction) => {
+  try {
+      const {usersID, password} = req.body;
+      const user = await usersModel.authenticate(usersID, password);
+      const token = jwt.sign({ user }, config.tokenSecret as unknown as string );
+      if(!user){
+        return res.status(401).json({
+          status: 'Error',
+          message: 'The user name or password is not correct please try again',
+        })
+      }
+      return res.json({
+        message: 'Successfully user is authorized',
+        data: {...user, token},
+    })
+  } catch (error) {
+      next(error);
+  }
 };

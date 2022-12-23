@@ -87,6 +87,29 @@ class userModel {
       }
     }
     // authenticate user
+  async authenticate(usersID: string, password: string): Promise<User | null>{
+      try {
+        const conn = await client.connect();
+        const sql = 'SELECT password FROM users WHERE usersID=$1';
+        const result = await conn.query(sql, [usersID]);
+        if(result.rows.length){
+          const {password: hashPassword}= result.rows[0];
+          const PasswordValidate = bcrypt.compareSync(
+            `${password}${config.pepper}`,hashPassword
+          );
+          if(PasswordValidate){
+            const userInfo = await conn.query(
+              'SELECT usersID, firstName, lastName FROM users WHERE usersID=($1)',[usersID]
+            );
+            return userInfo.rows[0];
+          }
+        }
+        conn.release();
+        return null;
+      } catch (error) {
+        throw new Error (`Error can't login this user : ${(error as Error).message}`)
+      }
+    } 
     // reset password
 }
 

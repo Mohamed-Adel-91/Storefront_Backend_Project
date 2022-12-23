@@ -56,6 +56,7 @@ Before submitting, make sure that your project is complete with a `README.md`. Y
 
 Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
 
+### include instructions for setting up
 ### MY .env file 
   port=3000
   NODE_ENV=dev

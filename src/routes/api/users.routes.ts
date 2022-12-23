@@ -12,4 +12,7 @@ routes.route('/:usersID')
   .patch(controllers.updateOneUser)
   .delete(controllers.deleteOneUser);
 
+// authentication
+routes.route('./auth').post(controllers.authenticate);
+
 export default routes;

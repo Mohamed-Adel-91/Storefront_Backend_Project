@@ -50,7 +50,7 @@ app.get("/", (req: express.Request, res: express.Response) => {
 
 app.use((_req: express.Request, res: express.Response) => {
   res.status(404).json({
-    message: "What do you do ? some wrong was happened :o",
+    message: "What do you do ? something wrong was happened :o , please recheck the readme file ..!!",
   });
 });
 
