@@ -1,5 +1,12 @@
 import User from "../types/user.type";
 import client from "../database"
+import config from "../middleware/config";
+import bcrypt from "bcrypt";
+
+const hashPassword = (password: string) => {
+  const salt = parseInt(config.salt as string, 10);
+  return bcrypt.hashSync(`${password}${config.salt}`, salt);
+};
 class userModel {
     //create user
   async create (u:User): Promise<User> {
@@ -12,7 +19,7 @@ class userModel {
         const result = await conn.query(sql, [
             u.firstName,
             u.lastName,
-            u.password
+            hashPassword(u.password),
         ]);
         // release conn
         conn.release();
@@ -58,8 +65,8 @@ class userModel {
         const result = await conn.query(sql, [
           u.firstName,
           u.lastName,
-          u.password,
-          u.usersID
+          hashPassword(u.password),
+          u.usersID,
         ]);
         conn.release();
         return result.rows[0];
