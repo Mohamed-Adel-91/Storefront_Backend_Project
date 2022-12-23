@@ -57,6 +57,20 @@ Before submitting, make sure that your project is complete with a `README.md`. Y
 Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
 
 ### include instructions for setting up
+
+## Documentation for start
+1 - npm i `to install node_modules`
+2 - npm run build `to build files`
+3 - npm run migration:run `to db migrate up`
+4 - npm run test `to run test`
+5 - npm run start `to start server`
+## some end points
+GET:\`http://localhost:3000/api/users/` to get all user
+POST:\`http://localhost:3000/api/users` and add (firstName, lastName, password) in req.body to create user
+GET:\`http://localhost:3000/api/users/1` to get user id no. 1
+DELETE:\`http://localhost:3000/api/users/1` to delete user id no. 1
+PATCH:\`http://localhost:3000/api/users/1` to update user id no. 1
+
 ### MY .env file 
   port=3000
   NODE_ENV=dev
@@ -67,3 +81,7 @@ Before submitting your project, spin it up and test each endpoint. If each one r
   POSTGRES_DATABASE_TEST=store_test
   POSTGRES_USER=postgres
   POSTGRES_PASSWORD=postgres
+
+  BCRYPT_PASSWORD=bcrypt-test123
+  SALT_ROUNDS=10
+  TOKEN_SECRET=token-secret-test123
