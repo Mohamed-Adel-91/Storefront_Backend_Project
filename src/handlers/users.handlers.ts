@@ -29,7 +29,7 @@ export const getAllUsers = async (
   try {
     const users = await usersModel.getAllUsers();
     return res.send({
-      message: 'Successfully users retrieved',
+      message: 'users retrieved',
       data: users,
     });
   } catch (error) {
@@ -47,7 +47,7 @@ export const getOneUser = async (
       req.params.usersID as unknown as number
     );
     return res.send({
-      message: 'Successfully user retrieved',
+      message: 'user retrieved',
       data: user,
     });
   } catch (error) {
@@ -63,7 +63,7 @@ export const updateOneUser = async (
   try {
     const user = await usersModel.updateOneUser(req.body);
     return res.send({
-      message: 'Successfully user updated',
+      message: 'user updated',
       data: user,
     });
   } catch (error) {
@@ -81,7 +81,7 @@ export const deleteOneUser = async (
       req.params.usersID as unknown as number
     );
     return res.send({
-      message: 'Successfully user deleted',
+      message: 'user deleted',
       data: user,
     });
   } catch (error) {
@@ -100,12 +100,11 @@ export const authenticate = async (
     const token = jwt.sign({ user }, config.tokenSecret as unknown as string);
     if (!user) {
       return res.status(401).send({
-        status: 'Error',
         message: 'The user name or password is not correct please try again',
       });
     }
     return res.send({
-      message: 'Successfully user is authorized',
+      message: 'user is authorized',
       data: { ...user, token },
     });
   } catch (error) {
