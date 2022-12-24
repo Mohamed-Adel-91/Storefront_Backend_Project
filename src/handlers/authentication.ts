@@ -3,7 +3,7 @@ import config from '../config';
 import jwt from 'jsonwebtoken';
 import Error from '../interfaces/error.interface';
 
-const handleUnauthorizedError = (next: NextFunction) => {
+const Errorhandler = (next: NextFunction) => {
   const error: Error = new Error(
     'Login failed because its Unauthorized please try again ..!!'
   );
@@ -11,7 +11,7 @@ const handleUnauthorizedError = (next: NextFunction) => {
   next(error);
 };
 
-const validateTokenMiddleware = (
+const validateToken = (
   req: Request,
   _res: Response,
   next: NextFunction
@@ -35,20 +35,20 @@ const validateTokenMiddleware = (
           next();
         } else {
           //failed to authenticate user
-          handleUnauthorizedError(next);
+          Errorhandler(next);
         }
       } else {
         //token type not bearer
-        handleUnauthorizedError(next);
+        Errorhandler(next);
       }
     } else {
       // no token provided
-      handleUnauthorizedError(next);
+      Errorhandler(next);
     }
     //failed to authenticate user
   } catch (error) {
-    handleUnauthorizedError(next);
+    Errorhandler(next);
   }
 };
 
-export default validateTokenMiddleware;
+export default validateToken;
