@@ -1,5 +1,5 @@
-import { Pool } from "pg";
-import config from "../config";
+import { Pool } from 'pg';
+import config from '../config';
 
 const client = new Pool({
   host: config.host,
@@ -10,7 +10,7 @@ const client = new Pool({
   max: 4,
 });
 
-client.on("error", (error: Error) => {
+client.on('error', (error: Error) => {
   console.error(error.message);
 });
 

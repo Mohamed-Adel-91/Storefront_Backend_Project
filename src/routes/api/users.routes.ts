@@ -1,17 +1,19 @@
-import { Router } from "express";
+import { Router } from 'express';
 import * as controllers from '../../controllers/users.controllers';
 import validateTokenMiddleware from '../../middleware/authentication.middleware';
 
 const routes = Router();
 
-routes.route('/')
+routes
+  .route('/')
   .get(validateTokenMiddleware, controllers.getAllUsers)
-  .post( controllers.create);
+  .post(controllers.create);
 
-routes.route('/:usersID')
-  .get( controllers.getOneUser)
-  .patch( controllers.updateOneUser)
-  .delete( controllers.deleteOneUser);
+routes
+  .route('/:usersID')
+  .get(controllers.getOneUser)
+  .patch(controllers.updateOneUser)
+  .delete(controllers.deleteOneUser);
 
 // authentication
 routes.route('/auth').post(controllers.authenticate);

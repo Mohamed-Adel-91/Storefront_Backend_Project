@@ -1,5 +1,5 @@
-import express from "express";
-import Error from "../interfaces/error.interface";
+import express from 'express';
+import Error from '../interfaces/error.interface';
 
 const errorMiddleware = (
   error: Error,
@@ -8,7 +8,7 @@ const errorMiddleware = (
   next: express.NextFunction
 ) => {
   const status = error.status || 500;
-  const massage = error.message || "something wrong is happened";
+  const massage = error.message || 'something wrong is happened';
   res.status(status).json({ status, massage });
   next();
 };
