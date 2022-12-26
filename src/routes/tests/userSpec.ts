@@ -29,6 +29,7 @@ describe('UserModels', () => {
     const user = {
       firstName: 'test',
       lastName: 'user',
+      userName: 'mohamed1234',
       password: 'test123',
     } as User;
 
@@ -51,12 +52,14 @@ describe('UserModels', () => {
     //   const result  = await userStore.create({
     //     firstName: 'test2',
     //     lastName: 'user2',
+    //    userName: 'mohamed1234',
     //     password: 'test123',
     //   } as User);
     //   expect(result).toEqual({
     //     usersID: '1',
     //     firstName: 'test2',
     //     lastName: 'user2',
+    //    userName: 'mohamed1234',
     //     password: 'test123',
     //   } as User);
     // });
@@ -66,6 +69,7 @@ describe('UserModels', () => {
     //     usersID: "1",
     //     firstName: 'test2',
     //     lastName: 'user2',
+    //    userName: 'mohamed1234',
     //     password: 'test123',
     //   }]);
     // });
@@ -75,6 +79,7 @@ describe('UserModels', () => {
     //     usersID: "1",
     //     firstName: 'test2',
     //     lastName: 'user2',
+    //    userName: 'mohamed1234',
     //     password: 'test123',
     //   });
     // });
@@ -92,6 +97,7 @@ describe('UserModels', () => {
     //   expect(userCalled.usersID).toBe(user.usersID);
     //   expect(userCalled.firstName).toBe(user.firstName);
     //   expect(userCalled.lastName).toBe(user.lastName);
+    //   expect(userCalled.userName).toBe(user.userName);   
     //   expect(userCalled.password).toBe(user.password);
     // });
   });

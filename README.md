@@ -81,7 +81,6 @@ PATCH:\`http://localhost:3000/api/users/1` to update user id no. 1
   POSTGRES_DATABASE_TEST=store_test
   POSTGRES_USER=postgres
   POSTGRES_PASSWORD=postgres
-
-  BCRYPT_PASSWORD=bcrypt-test123
-  SALT_ROUNDS=10
-  TOKEN_SECRET=token-secret-test123
+BCRYPT_PASSWORD=speak-friend-and-enter
+SALT_ROUNDS=10
+TOKEN_SECRET=your-token-secret

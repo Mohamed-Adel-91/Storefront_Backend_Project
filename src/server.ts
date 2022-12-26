@@ -7,11 +7,16 @@ import errorMiddleware from './middleware/error.middleware';
 import config from './config';
 import client from './database';
 import routes from './routes';
-
-const port = config.port || 3000;
+import cors from 'cors';
 
 const app: Application = express();
+const port = config.port || 3000;
+const corsOptions = {
+  origin: 'http://someotherdomin.com',
+  optionsSuccessStatus: 200
+};
 
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(helmet());

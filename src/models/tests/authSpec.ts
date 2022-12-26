@@ -14,6 +14,7 @@ describe('Auth Module', () => {
     const user = {
       firstName: 'test',
       lastName: 'user',
+      userName: 'mohamed123',
       password: 'test123',
     } as User;
 
@@ -35,6 +36,7 @@ describe('Auth Module', () => {
       expect(authenticateUser?.usersID).toBe(user.usersID);
       expect(authenticateUser?.firstName).toBeUndefined();
       expect(authenticateUser?.lastName).toBeUndefined();
+      expect(authenticateUser?.userName).toBeUndefined();
     });
     it('Authenticate method should return null for wrong password', async () => {
       const authenticateUser = await UserModel.authenticate(

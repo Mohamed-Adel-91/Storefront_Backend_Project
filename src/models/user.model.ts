@@ -26,12 +26,13 @@ class userModel {
     try {
       //open conn with DB
       const conn = await client.connect();
-      const sql = `INSERT INTO users (firstName, lastName, password)
-        VALUES ($1, $2, $3) RETURNING usersID, firstName, lastName`;
+      const sql = `INSERT INTO users (firstName, lastName, userName, password)
+        VALUES ($1, $2, $3, $4) RETURNING usersID, firstName, lastName, userName`;
       // run query
       const result = await conn.query(sql, [
         u.firstName,
         u.lastName,
+        u.userName,
         hashPassword(u.password),
       ]);
       // release conn
@@ -40,9 +41,7 @@ class userModel {
       return result.rows[0];
     } catch (error) {
       throw new Error(
-        `You can't create user
-        ${u.firstName}-${u.lastName}:
-        ${(error as Error).message}.!!`
+        `You can't create user ${u.userName}: ${(error as Error).message}.!!`
       );
     }
   }
@@ -65,10 +64,11 @@ class userModel {
   async update(u: User): Promise<User> {
     try {
       const conn = await client.connect();
-      const sql = `UPDATE users SET firstName=$1, lastName=$2, password=$3 WHERE usersID=$4 RETURNING *`;
+      const sql = `UPDATE users SET firstName=$1, lastName=$2, userName=$3, password=$4 WHERE usersID=$5 RETURNING *`;
       const result = await conn.query(sql, [
         u.firstName,
         u.lastName,
+        u.userName,
         hashPassword(u.password),
         u.usersID,
       ]);
@@ -84,7 +84,7 @@ class userModel {
   async delete(usersID: number): Promise<User> {
     try {
       const conn = await client.connect();
-      const sql = `DELETE FROM users WHERE usersID=($1) RETURNING usersID, firstName, lastName`;
+      const sql = `DELETE FROM users WHERE usersID=($1) RETURNING usersID, firstName, lastName, userName`;
       const result = await conn.query(sql, [usersID]);
       conn.release();
       return result.rows[0];
@@ -95,11 +95,11 @@ class userModel {
     }
   }
   // authenticate user
-  async authenticate(usersID: string, password: string): Promise<User | null> {
+  async authenticate(userName: string, password: string): Promise<User | null> {
     try {
       const conn = await client.connect();
-      const sql = 'SELECT password FROM users WHERE usersID=$1';
-      const result = await conn.query(sql, [usersID]);
+      const sql = 'SELECT password FROM users WHERE userName=($1)';
+      const result = await conn.query(sql, [userName]);
       if (result.rows.length) {
         const { password: hashPassword } = result.rows[0];
         const PasswordValidate = bcrypt.compareSync(
@@ -108,8 +108,8 @@ class userModel {
         );
         if (PasswordValidate) {
           const userInfo = await conn.query(
-            'SELECT usersID, firstName, lastName FROM users WHERE usersID=($1)',
-            [usersID]
+            'SELECT usersID, firstName, lastName, userName FROM users WHERE userName=($1)',
+            [userName]
           );
           return userInfo.rows[0];
         }
