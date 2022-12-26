@@ -6,14 +6,14 @@ const routes = Router();
 
 routes
   .route('/')
-  .get(validateTokenMiddleware, handlers.getAllUsers)
+  .get(validateTokenMiddleware, handlers.index)
   .post(handlers.create);
 
 routes
   .route('/:usersID')
-  .get(handlers.getOneUser)
-  .patch(handlers.updateOneUser)
-  .delete(handlers.deleteOneUser);
+  .get(handlers.show)
+  .patch(handlers.update)
+  .delete(handlers.deleteUser);
 
 // authentication
 routes.route('/auth').post(handlers.authenticate);

@@ -8,6 +8,19 @@ const hashPassword = (password: string) => {
   return bcrypt.hashSync(`${password}${config.salt}`, salt);
 };
 class userModel {
+  // get all users
+  async index():Promise<User[]> {
+    try{
+      const conn = await client.connect();
+      const sql = `SELECT * FROM users`;
+      const result = await conn.query(sql);
+      conn.release();
+      return result.rows;
+    } catch (error) {
+      throw new Error(`Error found users: ${(error as Error).message}`);
+    }
+    };
+    
   //create user
   async create(u: User): Promise<User> {
     try {
@@ -33,23 +46,12 @@ class userModel {
       );
     }
   }
-  // get all users
-  async getAllUsers(): Promise<User[]> {
-    try {
-      const conn = await client.connect();
-      const sql = `SELECT usersID, firstName, lastName FROM users`;
-      const result = await conn.query(sql);
-      conn.release();
-      return result.rows;
-    } catch (error) {
-      throw new Error(`Error found : ${(error as Error).message}`);
-    }
-  }
+  
   // get specific user
-  async getOneUser(usersID: number): Promise<User> {
+  async show(usersID: string): Promise<User> {
     try {
       const conn = await client.connect();
-      const sql = `SELECT usersID, firstName, lastName FROM users WHERE usersID=($1)`;
+      const sql = `SELECT * FROM users WHERE usersID=($1)`;
       const result = await conn.query(sql, [usersID]);
       conn.release();
       return result.rows[0];
@@ -60,7 +62,7 @@ class userModel {
     }
   }
   // update user
-  async updateOneUser(u: User): Promise<User> {
+  async update(u: User): Promise<User> {
     try {
       const conn = await client.connect();
       const sql = `UPDATE users SET firstName=$1, lastName=$2, password=$3 WHERE usersID=$4 RETURNING *`;
@@ -79,7 +81,7 @@ class userModel {
     }
   }
   // delete user
-  async deleteOneUser(usersID: number): Promise<User> {
+  async delete(usersID: number): Promise<User> {
     try {
       const conn = await client.connect();
       const sql = `DELETE FROM users WHERE usersID=($1) RETURNING usersID, firstName, lastName`;

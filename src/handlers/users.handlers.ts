@@ -21,13 +21,13 @@ export const create = async (
   }
 };
 
-export const getAllUsers = async (
+export const index = async (
   _req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const users = await usersModel.getAllUsers();
+    const users = await usersModel.index();
     return res.send({
       message: 'users retrieved',
       data: users,
@@ -37,14 +37,14 @@ export const getAllUsers = async (
   }
 };
 
-export const getOneUser = async (
+export const show = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const user = await usersModel.getOneUser(
-      req.params.usersID as unknown as number
+    const user = await usersModel.show(
+      req.params.usersID as unknown as string
     );
     return res.send({
       message: 'user retrieved',
@@ -55,13 +55,13 @@ export const getOneUser = async (
   }
 };
 
-export const updateOneUser = async (
+export const update = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const user = await usersModel.updateOneUser(req.body);
+    const user = await usersModel.update(req.body);
     return res.send({
       message: 'user updated',
       data: user,
@@ -71,13 +71,13 @@ export const updateOneUser = async (
   }
 };
 
-export const deleteOneUser = async (
+export const deleteUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const user = await usersModel.deleteOneUser(
+    const user = await usersModel.delete(
       req.params.usersID as unknown as number
     );
     return res.send({
