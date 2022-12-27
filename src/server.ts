@@ -13,7 +13,7 @@ const app: Application = express();
 const port = config.port || 3000;
 const corsOptions = {
   origin: 'http://someotherdomin.com',
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));

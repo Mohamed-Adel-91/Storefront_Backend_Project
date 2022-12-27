@@ -1,18 +1,34 @@
 import express from 'express';
 import userModel from '../models/user.model';
 import config from '../config';
-import jwt from 'jsonwebtoken';
+import jwt, { Secret } from 'jsonwebtoken';
+import User from '../types/user.type';
 
-const usersModel = new userModel();
+const store = new userModel();
 
 export const create = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
+  const user: User = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    userName: req.body.userName,
+    password: req.body.password,
+  };
   try {
-    const user = await usersModel.create(req.body);
-    return res.json(user);
+    const newUser = await store.create(user);
+    const token = jwt.sign({ user: newUser }, config.tokenSecret as Secret);
+    if (!newUser) {
+      return res.status(401).send({
+        message: 'The user name or password is not correct please try again',
+      });
+    }
+    return res.json({
+      message: 'user is authorized',
+      data: { ...newUser, token },
+    });
   } catch (error) {
     next(error);
   }
@@ -24,7 +40,7 @@ export const index = async (
   next: express.NextFunction
 ) => {
   try {
-    const users = await usersModel.index();
+    const users = await store.index();
     return res.json(users);
   } catch (error) {
     next(error);
@@ -37,9 +53,7 @@ export const show = async (
   next: express.NextFunction
 ) => {
   try {
-    const user = await usersModel.show(
-      req.params.usersID as unknown as string
-    );
+    const user = await store.show(req.params.userName as unknown as string);
     return res.json(user);
   } catch (error) {
     next(error);
@@ -52,7 +66,7 @@ export const update = async (
   next: express.NextFunction
 ) => {
   try {
-    const user = await usersModel.update(req.body.usersID);
+    const user = await store.update(req.body.userName);
     return res.json(user);
   } catch (error) {
     next(error);
@@ -65,33 +79,8 @@ export const deleteUser = async (
   next: express.NextFunction
 ) => {
   try {
-    const user = await usersModel.delete(
-      req.params.usersID as unknown as number
-    );
+    const user = await store.delete(req.params.userName as unknown as number);
     return res.json(user);
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const authenticate = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  try {
-    const { usersID, password } = req.body;
-    const user = await usersModel.authenticate(usersID, password);
-    const token = jwt.sign({ user }, config.tokenSecret as unknown as string);
-    if (!user) {
-      return res.status(401).send({
-        message: 'The user name or password is not correct please try again',
-      });
-    }
-    return res.send({
-      message: 'user is authorized',
-      data: { ...user, token },
-    });
   } catch (error) {
     next(error);
   }

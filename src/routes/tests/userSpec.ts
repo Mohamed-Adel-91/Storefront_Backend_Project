@@ -83,7 +83,7 @@ describe('UserModels', () => {
     //     password: 'test123',
     //   });
     // });
-  
+
     // it('delete method should remove the user', async () => {
     //   userStore.delete(1);
     //   const result = await userStore.index()
@@ -97,7 +97,7 @@ describe('UserModels', () => {
     //   expect(userCalled.usersID).toBe(user.usersID);
     //   expect(userCalled.firstName).toBe(user.firstName);
     //   expect(userCalled.lastName).toBe(user.lastName);
-    //   expect(userCalled.userName).toBe(user.userName);   
+    //   expect(userCalled.userName).toBe(user.userName);
     //   expect(userCalled.password).toBe(user.password);
     // });
   });

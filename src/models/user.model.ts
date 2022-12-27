@@ -9,8 +9,8 @@ const hashPassword = (password: string) => {
 };
 class userModel {
   // get all users
-  async index():Promise<User[]> {
-    try{
+  async index(): Promise<User[]> {
+    try {
       const conn = await client.connect();
       const sql = `SELECT * FROM users`;
       const result = await conn.query(sql);
@@ -19,8 +19,8 @@ class userModel {
     } catch (error) {
       throw new Error(`Error found users: ${(error as Error).message}`);
     }
-    };
-    
+  }
+
   //create user
   async create(u: User): Promise<User> {
     try {
@@ -45,7 +45,7 @@ class userModel {
       );
     }
   }
-  
+
   // get specific user
   async show(usersID: string): Promise<User> {
     try {
@@ -100,6 +100,7 @@ class userModel {
       const conn = await client.connect();
       const sql = 'SELECT password FROM users WHERE userName=($1)';
       const result = await conn.query(sql, [userName]);
+      console.log(password + config.pepper);
       if (result.rows.length) {
         const { password: hashPassword } = result.rows[0];
         const PasswordValidate = bcrypt.compareSync(
