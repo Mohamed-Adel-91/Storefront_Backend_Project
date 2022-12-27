@@ -47,58 +47,5 @@ describe('UserModels', () => {
       const users = await userStore.index();
       expect(users.length).toBe(1);
     });
-
-    // it('Create method should return a new user', async () => {
-    //   const result  = await userStore.create({
-    //     firstName: 'test2',
-    //     lastName: 'user2',
-    //    userName: 'mohamed1234',
-    //     password: 'test123',
-    //   } as User);
-    //   expect(result).toEqual({
-    //     usersID: '1',
-    //     firstName: 'test2',
-    //     lastName: 'user2',
-    //    userName: 'mohamed1234',
-    //     password: 'test123',
-    //   } as User);
-    // });
-    // it('index method should return a list of users', async () => {
-    //   const result = await  userStore.index();
-    //   expect(result).toEqual([{
-    //     usersID: "1",
-    //     firstName: 'test2',
-    //     lastName: 'user2',
-    //    userName: 'mohamed1234',
-    //     password: 'test123',
-    //   }]);
-    // });
-    // it('show method should return the correct user', async () => {
-    //   const result = await userStore.show("1");
-    //   expect(result).toEqual({
-    //     usersID: "1",
-    //     firstName: 'test2',
-    //     lastName: 'user2',
-    //    userName: 'mohamed1234',
-    //     password: 'test123',
-    //   });
-    // });
-
-    // it('delete method should remove the user', async () => {
-    //   userStore.delete(1);
-    //   const result = await userStore.index()
-    //   expect(result).toEqual([]);
-    // });
-
-    // it('Get one user should return same user called in the database', async () => {
-    //   const userCalled = await userStore.show(
-    //     user.usersID as unknown as string
-    //   );
-    //   expect(userCalled.usersID).toBe(user.usersID);
-    //   expect(userCalled.firstName).toBe(user.firstName);
-    //   expect(userCalled.lastName).toBe(user.lastName);
-    //   expect(userCalled.userName).toBe(user.userName);
-    //   expect(userCalled.password).toBe(user.password);
-    // });
   });
 });
