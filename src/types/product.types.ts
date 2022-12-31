@@ -1,6 +1,6 @@
 type product = {
   productID?: number;
-  Name: string;
+  productName: string;
   Price: number;
   Category: string;
 };

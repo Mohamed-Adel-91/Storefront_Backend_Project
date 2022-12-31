@@ -3,12 +3,8 @@ import client from '../database';
 import config from '../config';
 import bcrypt from 'bcrypt';
 
-const hashPassword = (password: string) => {
-  const salt = parseInt(config.salt as string, 10);
-  return bcrypt.hashSync(`${password}${config.salt}`, salt);
-};
+
 class userModel {
-  // get all users
   async index(): Promise<User[]> {
     try {
       const conn = await client.connect();
@@ -21,32 +17,53 @@ class userModel {
     }
   }
 
-  //create user
+ 
   async create(u: User): Promise<User> {
     try {
-      //open conn with DB
       const conn = await client.connect();
       const sql = `INSERT INTO users (firstName, lastName, userName, password)
         VALUES ($1, $2, $3, $4) RETURNING usersID, firstName, lastName, userName`;
-      // run query
+      const hashPassword = (password: string) => {
+        const salt = parseInt(config.salt as string, 10);
+        return bcrypt.hashSync(`${password}${config.salt}`, salt);
+      };
       const result = await conn.query(sql, [
         u.firstName,
         u.lastName,
         u.userName,
         hashPassword(u.password),
       ]);
-      // release conn
       conn.release();
-      // return create user
-      return result.rows[0];
+      const user = result.rows[0]
+      return user;
     } catch (error) {
       throw new Error(
         `You can't create user ${u.userName}: ${(error as Error).message}.!!`
       );
     }
   }
+    // authenticate user
+    async authenticate(userName: string, password: string): Promise<User | null> {
+      try {
+        const conn = await client.connect();
+        const sql = 'SELECT password FROM users WHERE userName=($1)';
+        const result = await conn.query(sql, [userName]);
+        console.log(password + config.pepper);
+        if (result.rows.length) {
+          const user = result.rows[0];
+          if (bcrypt.compareSync( `${password}${config.pepper}`,user.password)) {
+            return user;
+          }
+        }
+        conn.release();
+        return null;
+      } catch (error) {
+        throw new Error(
+          `Error can't login this user : ${(error as Error).message}`
+        );
+      }
+    }
 
-  // get specific user
   async show(usersID: string): Promise<User> {
     try {
       const conn = await client.connect();
@@ -60,7 +77,7 @@ class userModel {
       );
     }
   }
-  // update user
+
   async update(u: User): Promise<User> {
     try {
       const conn = await client.connect();
@@ -80,7 +97,7 @@ class userModel {
       );
     }
   }
-  // delete user
+
   async delete(usersID: number): Promise<User> {
     try {
       const conn = await client.connect();
@@ -94,35 +111,12 @@ class userModel {
       );
     }
   }
-  // authenticate user
-  async authenticate(userName: string, password: string): Promise<User | null> {
-    try {
-      const conn = await client.connect();
-      const sql = 'SELECT password FROM users WHERE userName=($1)';
-      const result = await conn.query(sql, [userName]);
-      console.log(password + config.pepper);
-      if (result.rows.length) {
-        const { password: hashPassword } = result.rows[0];
-        const PasswordValidate = bcrypt.compareSync(
-          `${password}${config.pepper}`,
-          hashPassword
-        );
-        if (PasswordValidate) {
-          const userInfo = await conn.query(
-            'SELECT usersID, firstName, lastName, userName FROM users WHERE userName=($1)',
-            [userName]
-          );
-          return userInfo.rows[0];
-        }
-      }
-      conn.release();
-      return null;
-    } catch (error) {
-      throw new Error(
-        `Error can't login this user : ${(error as Error).message}`
-      );
-    }
-  }
+
 }
 
 export default userModel;
+function hashPassword(password: string) {
+  console.log(password);
+  throw new Error('Function not implemented.');
+}
+

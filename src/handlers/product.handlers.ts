@@ -18,7 +18,7 @@ export const create = async (req: Request, res: Response) => {
   }
   try {
     const product: product = {
-      Name: req.body.Name,
+      productName: req.body.productName,
       Price: req.body.Price,
       Category: req.body.Category,
     };

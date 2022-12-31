@@ -4,7 +4,7 @@ import User from '../../types/user.type';
 
 const userStore = new userModel();
 
-describe('UserModels', () => {
+describe('User API test', () => {
   describe('Test Methods', () => {
     it('Get all users method', () => {
       expect(userStore.index).toBeDefined();
