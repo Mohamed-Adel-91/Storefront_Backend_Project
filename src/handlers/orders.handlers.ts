@@ -19,7 +19,7 @@ export const create = async (req: Request, res: Response) => {
   try {
     const orders: orders = {
       usersID: req.body.usersID,
-      Status: req.body.Status,
+      order_status: req.body.order_status,
     };
     const newOrder = await store.create(orders);
     res.json(newOrder);

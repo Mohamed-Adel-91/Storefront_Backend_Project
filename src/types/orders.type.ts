@@ -1,7 +1,7 @@
 type orders = {
   orderID?: number;
   usersID: number;
-  Status: string;
+  order_status: string;
 };
 
 export default orders;
